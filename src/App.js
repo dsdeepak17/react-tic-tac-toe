@@ -5,12 +5,12 @@ import { Switch } from 'antd';
 import { getWordsFromCamelCase } from './utils';
 
 const gameMode = {
-  onePlayer: 'twoPlayer',
-  twoPlayer: 'onePlayer',
+  onePlayerMode: 'twoPlayerMode',
+  twoPlayerMode: 'onePlayerMode',
 };
 
 export default function App() {
-  const [mode, setMode] = React.useState('twoPlayer');
+  const [mode, setMode] = React.useState('twoPlayerMode');
 
   const handleModeChange = () => {
     setMode(gameMode[mode]);
@@ -18,8 +18,8 @@ export default function App() {
   return (
     <div className="App">
       <div className="mode-switch">
-        <span>{getWordsFromCamelCase(mode)}</span>
         <Switch defaultChecked onChange={handleModeChange} />
+        <span>{getWordsFromCamelCase(mode)}</span>
       </div>
 
       <TicTacToe gameMode={mode} />

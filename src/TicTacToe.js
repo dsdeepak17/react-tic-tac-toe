@@ -31,12 +31,12 @@ const TicTacToe = ({ gameMode }) => {
 
   React.useEffect(() => {
     setTilesVal(board);
-    if (gameMode === 'onePlayer')
+    if (gameMode === 'onePlayerMode')
       setPlayers((players) => ({
         ...players,
         player2: 'Dumb Computer',
       }));
-    if (gameMode === 'twoPlayer')
+    if (gameMode === 'twoPlayerMode')
       setPlayers((players) => ({
         ...players,
         player2: 'Player2',
@@ -44,7 +44,7 @@ const TicTacToe = ({ gameMode }) => {
   }, [gameMode]);
 
   React.useEffect(() => {
-    if (gameMode === 'onePlayer' && turn === 'player2') {
+    if (gameMode === 'onePlayerMode' && turn === 'player2') {
       const newBoard = newBoardAfterMove(tilesVal, 'O');
       // console.log(turn, newBoard);
       if (!isGameOver(tilesVal)) {
@@ -114,7 +114,7 @@ const TicTacToe = ({ gameMode }) => {
           name="player2"
           value={players.player2}
           onChange={handleNameChange}
-          disabled={gameMode === 'onePlayer'}
+          disabled={gameMode === 'onePlayerMode'}
         />
       </div>
 
