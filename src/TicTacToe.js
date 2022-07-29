@@ -134,7 +134,7 @@ const TicTacToe = ({ gameMode }) => {
       </div>
       <p>{winner && winner !== 'Tie' && `Winner: ${winner}`}</p>
       <p>{winner && winner === 'Tie' && 'The Game is Tied!'}</p>
-      {gamePaused && (
+      {true && (
         <button
           className="reset-btn"
           onClick={() => {
