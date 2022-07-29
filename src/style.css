@@ -22,6 +22,7 @@
   justify-content: center;
   padding: 10px;
   background: #444;
+  height: 100vh;
 }
 
 .heading {
@@ -109,6 +110,7 @@ p {
   outline: none;
   border-radius: 5px;
   border: solid 0.3px #111;
+  max-width: calc(100vw - 20px);
 }
 .player-name-input.active {
   box-shadow: 0 0 10px var(--game-over-color);
@@ -141,6 +143,7 @@ p {
   width: 18rem;
   display: flex;
   flex-direction: column;
+  max-width: calc(100vw - 16px);
 }
 .player-names {
   display: flex;
