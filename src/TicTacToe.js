@@ -30,6 +30,7 @@ const TicTacToe = ({ gameMode }) => {
   const [gamePaused, setGamePaused] = React.useState(false);
 
   React.useEffect(() => {
+    setTilesVal(board);
     if (gameMode === 'onePlayer')
       setPlayers((players) => ({
         ...players,
