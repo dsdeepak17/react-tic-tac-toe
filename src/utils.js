@@ -58,7 +58,6 @@ const getRandNum = (n, indices) => {
   let allPos = [0, 1, 2, 3, 4, 5, 6, 7, 8];
   let remainingPos = allPos.filter((val) => !indices.includes(val));
   let num = Math.floor(Math.random() * n);
-  console.log(num, remainingPos[num], indices, remainingPos);
   return remainingPos[num];
 };
 
@@ -83,6 +82,5 @@ export const newBoardAfterMove = (board, val) => {
   let pos = getNextMovePos(board);
   let newBoard = board.slice();
   newBoard[pos] = val;
-  console.log(board, newBoard, pos, val);
   return newBoard;
 };
