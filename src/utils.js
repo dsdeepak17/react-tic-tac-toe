@@ -150,7 +150,6 @@ const minimax = (newBoard, player) => {
 
 export const newBoardAfterDifficultMove = (board, val) => {
   let { index: pos, score } = minimax(board, 'O');
-  console.log(pos, score);
   let newBoard = board.slice();
   newBoard[pos] = val;
   return newBoard;
