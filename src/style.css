@@ -1,9 +1,9 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');
 
 :root {
   --tile-size: 60px;
   --tile-gap: 5px;
-  --font-size: 36px;
+  --font-size: 40px;
   --border-size: 10px;
   --primary-color: #f1f1c0;
   --game-over-color: #ff0099;
@@ -26,7 +26,7 @@
 }
 
 .heading {
-  font-size: var(--font-size);
+  font-size: 30px;
   text-align: center;
   color: beige;
 }
@@ -63,6 +63,7 @@ p {
 
 .tile-btn {
   font-size: var(--font-size);
+  font-weight: 700;
   background: #f1f1c0;
   color: purple;
   height: var(--tile-size);
@@ -71,6 +72,9 @@ p {
   outline: none;
   border-radius: 3px;
   transition: all 0.3s ease-in-out;
+}
+.win-pos {
+  background-color: #999;
 }
 
 .reset-btn {
@@ -81,10 +85,10 @@ p {
   border-radius: 3px;
   outline: none;
   border: none;
-  background: yellowgreen;
-  color: #111;
+  background: var(--game-over-color);
+    color: var(--primary-color);
   cursor: pointer;
-  transition: all 0.3s ease-in-out;
+  transition: all 2.5s ease-in-out;
 }
 .reset-btn:active {
   transform: scale(0.99);
@@ -154,15 +158,22 @@ p {
 .mode-switch {
   position: absolute;
   top: 20px;
-    right: 5px;
+  right: 5px;
+}
+
+.difficulty-switch {
+  position: absolute;
+  top: 20px;
+  left: 5px;
+}
+
+.switch {
   display: flex;
   flex-direction: column;
 }
-.mode-switch :is(span) {
+.mode-switch,
+.difficulty-switch :is(span) {
   color: beige;
   padding: 5px 6px;
-  writing-mode: vertical-lr;
-    text-orientation: upright;
-    margin: 100px 0px;
-    text-shadow: 0 0 5px var(--game-over-color);
-}
+  text-align: center;
+  }
