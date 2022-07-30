@@ -33,21 +33,33 @@ const TicTacToe = ({ gameMode, difficultyMode }) => {
   React.useEffect(() => {
     setTilesVal(board);
     if (gameMode === 'onePlayerMode')
-      setPlayers((players) => ({
-        ...players,
-        player2: 'Dumb Computer',
-      }));
+      switch (difficultyMode) {
+        case 'easy':
+          setPlayers((players) => ({
+            ...players,
+            player2: 'Dumb Computer',
+          }));
+          break;
+        case 'hard':
+          setPlayers((players) => ({
+            ...players,
+            player2: 'Smart Computer',
+          }));
+          break;
+        default:
+          break;
+      }
     if (gameMode === 'twoPlayerMode')
       setPlayers((players) => ({
         ...players,
         player2: 'Player2',
       }));
-  }, [gameMode]);
+    setGamePaused(false);
+  }, [gameMode, difficultyMode]);
 
   React.useEffect(() => {
     if (gameMode === 'onePlayerMode' && turn === 'player2' && difficultyMode === 'easy' && !gamePaused) {
       const newBoard = newBoardAfterEasyMove(tilesVal, 'O');
-      // console.log(turn, newBoard);
       if (!isGameOver(tilesVal)) {
         setTilesVal(newBoard);
         setTurn('player1');
@@ -56,7 +68,6 @@ const TicTacToe = ({ gameMode, difficultyMode }) => {
 
     if (gameMode === 'onePlayerMode' && turn === 'player2' && difficultyMode === 'hard' && !gamePaused) {
       const newBoard = newBoardAfterDifficultMove(tilesVal, 'O');
-      // console.log(turn, newBoard);
       if (!isGameOver(tilesVal)) {
         setTilesVal(newBoard);
         setTurn('player1');
@@ -104,7 +115,7 @@ const TicTacToe = ({ gameMode, difficultyMode }) => {
   return (
     <div className="center">
       <h3 className="heading">Tic Tac Toe</h3>
-      <Leaderboard leaderboard={leaderboard} players={players} />
+      <Leaderboard leaderboard={leaderboard} players={players} gameMode={gameMode} />
       <div className="player-names">
         <input
           type="text"
@@ -155,7 +166,7 @@ const TicTacToe = ({ gameMode, difficultyMode }) => {
           className="reset-btn"
           onClick={() => {
             setTilesVal(board);
-            setGamePaused(false);
+            setTimeout(() => { setGamePaused(false) }, 0);
           }}
         >
           Reset Board
