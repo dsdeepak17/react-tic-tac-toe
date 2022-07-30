@@ -1,6 +1,6 @@
 import React from 'react';
 import Tile from './Tile';
-import { isGameOver, capitalize, newBoardAfterMove } from './utils';
+import { isGameOver, capitalize, newBoardAfterEasyMove, newBoardAfterDifficultMove } from './utils';
 import Leaderboard from './Leaderboard';
 
 const board = Array.from({ length: 9 }, (v, i) => i);
@@ -18,10 +18,11 @@ const p = {
   Tie: 'Tie',
 };
 
-const TicTacToe = ({ gameMode }) => {
+const TicTacToe = ({ gameMode, difficultyMode }) => {
   const [turn, setTurn] = React.useState('player1');
   const [tilesVal, setTilesVal] = React.useState(board);
   const [winner, setWinner] = React.useState('');
+  const [winPos, setWinPos] = React.useState([]);
   const [players, setPlayers] = React.useState({
     player1: 'Player1',
     player2: 'Player2',
@@ -44,15 +45,27 @@ const TicTacToe = ({ gameMode }) => {
   }, [gameMode]);
 
   React.useEffect(() => {
-    if (gameMode === 'onePlayerMode' && turn === 'player2') {
-      const newBoard = newBoardAfterMove(tilesVal, 'O');
+    if (gameMode === 'onePlayerMode' && turn === 'player2' && difficultyMode === 'easy' && !gamePaused) {
+      const newBoard = newBoardAfterEasyMove(tilesVal, 'O');
       // console.log(turn, newBoard);
       if (!isGameOver(tilesVal)) {
         setTilesVal(newBoard);
         setTurn('player1');
       }
     }
-    const gameWinner = isGameOver(tilesVal);
+
+    if (gameMode === 'onePlayerMode' && turn === 'player2' && difficultyMode === 'hard' && !gamePaused) {
+      const newBoard = newBoardAfterDifficultMove(tilesVal, 'O');
+      // console.log(turn, newBoard);
+      if (!isGameOver(tilesVal)) {
+        setTilesVal(newBoard);
+        setTurn('player1');
+      }
+    }
+
+    const { winner: gameWinner, winPos: winningPositions } = isGameOver(tilesVal) || { winner: '', winPos: [] };
+
+    setWinPos(winningPositions);
 
     gameWinner === 'Tie'
       ? setWinner(gameWinner)
@@ -63,7 +76,7 @@ const TicTacToe = ({ gameMode }) => {
   }, [tilesVal]);
 
   React.useEffect(() => {
-    const gameWinner = isGameOver(tilesVal);
+    const { winner: gameWinner } = isGameOver(tilesVal) || { winner: '' };
     if (gameWinner) setLeaderboard((l) => [...l, gameWinner]);
   }, [gamePaused]);
 
@@ -125,7 +138,9 @@ const TicTacToe = ({ gameMode }) => {
               <Tile
                 key={i}
                 val={v}
+                index={i}
                 turn={turn}
+                winPos={winPos}
                 handleTurn={handleTurn}
                 handleTileVal={handleTileVal}
               />
