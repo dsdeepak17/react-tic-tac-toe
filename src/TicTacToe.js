@@ -19,6 +19,7 @@ const p = {
 };
 
 const TicTacToe = ({ gameMode, difficultyMode }) => {
+  const [gameStart, setGameStart] = React.useState(false);
   const [turn, setTurn] = React.useState('player1');
   const [tilesVal, setTilesVal] = React.useState(board);
   const [winner, setWinner] = React.useState('');
@@ -31,6 +32,15 @@ const TicTacToe = ({ gameMode, difficultyMode }) => {
   const [gamePaused, setGamePaused] = React.useState(false);
 
   // console.log('state: ', { turn, tilesVal, winner, winPos, players, leaderboard, gamePaused });
+
+  React.useEffect(() => {
+    const tilesEmpty = tilesVal.filter((val) => typeof val === 'number').length === 9;
+    if (gamePaused === false && tilesEmpty) {
+      setGameStart(true);
+    } else {
+      setGameStart(false);
+    }
+  }, [gamePaused]);
 
   React.useEffect(() => {
     setTilesVal(board);
@@ -86,7 +96,7 @@ const TicTacToe = ({ gameMode, difficultyMode }) => {
     if (gameWinner) {
       setGamePaused(true);
     }
-  }, [tilesVal]);
+  }, [tilesVal, gameStart]);
 
   React.useEffect(() => {
     const { winner: gameWinner } = isGameOver(tilesVal) || { winner: '' };
