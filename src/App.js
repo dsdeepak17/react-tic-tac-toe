@@ -40,6 +40,7 @@ export default function App() {
 
   return (
     <div className="App">
+      <h3 className="heading">Tic Tac Toe</h3>
       <TicTacToe gameMode={mode} difficultyMode={computerDifficulty} />
       <div className="mode-switch switch">
         <Switch defaultChecked onChange={handleModeChange} />

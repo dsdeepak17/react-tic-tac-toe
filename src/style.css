@@ -18,8 +18,9 @@
 
 .App {
   display: flex;
-  align-items: center;
-  justify-content: center;
+  flex-direction: column;
+    align-items: center;
+    /* justify-content: center; */
   padding: 10px;
   background: #444;
   height: 100vh;
@@ -30,11 +31,19 @@
   text-align: center;
   color: beige;
 }
-p {
-  font-size: 28px;
+.game-over-message p {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: #444444bb;
+  border: solid 5px #ff0099bb;
+  border-radius: 5px;
+  font-size: 22px;
   text-align: center;
   color: beige;
   margin: 3px;
+  width: min(calc(100% - 20px), 380px);
 }
 
 .tile {
@@ -111,7 +120,7 @@ p {
   height: 40px;
   margin: 10px 12px;
   padding: 3px 6px;
-  font-size: 18px;
+  font-size: 16px;
   outline: none;
   border-radius: 5px;
   border: solid 0.3px #111;

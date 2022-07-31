@@ -30,6 +30,8 @@ const TicTacToe = ({ gameMode, difficultyMode }) => {
   const [leaderboard, setLeaderboard] = React.useState([]);
   const [gamePaused, setGamePaused] = React.useState(false);
 
+  // console.log('state: ', { turn, tilesVal, winner, winPos, players, leaderboard, gamePaused });
+
   React.useEffect(() => {
     setTilesVal(board);
     if (gameMode === 'onePlayerMode')
@@ -114,7 +116,6 @@ const TicTacToe = ({ gameMode, difficultyMode }) => {
 
   return (
     <div className="center">
-      <h3 className="heading">Tic Tac Toe</h3>
       <Leaderboard leaderboard={leaderboard} players={players} gameMode={gameMode} />
       <div className="player-names">
         <input
@@ -159,8 +160,14 @@ const TicTacToe = ({ gameMode, difficultyMode }) => {
           })}
         </div>
       </div>
-      <p>{winner && winner !== 'Tie' && `Winner: ${winner}`}</p>
-      <p>{winner && winner === 'Tie' && 'The Game is Tied!'}</p>
+      {
+        winner && (
+          <div className="game-over-message">
+            {winner !== 'Tie' && <p>{`Winner: ${winner}`}</p>}
+            {winner === 'Tie' && <p>{`The Game is Tied!`}</p>}
+          </div>
+        )
+      }
       {gamePaused && (
         <button
           className="reset-btn"
