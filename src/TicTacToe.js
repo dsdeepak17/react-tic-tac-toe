@@ -71,7 +71,15 @@ const TicTacToe = ({ gameMode, difficultyMode }) => {
 
   React.useEffect(() => {
     if (gameMode === 'onePlayerMode' && turn === 'player2' && difficultyMode === 'easy' && !gamePaused) {
-      const newBoard = newBoardAfterEasyMove(tilesVal, 'O');
+      //get random number between 1 and 10
+      const randomNumber = Math.floor(Math.random() * 10) + 1;
+      let newBoard = [];
+
+      //run easy algo and hard algo half the time
+      if (randomNumber <= 5) newBoard = newBoardAfterEasyMove(tilesVal, 'O');
+      else newBoard = newBoardAfterDifficultMove(tilesVal, 'O');
+
+
       if (!isGameOver(tilesVal)) {
         setTilesVal(newBoard);
         setTurn('player1');
