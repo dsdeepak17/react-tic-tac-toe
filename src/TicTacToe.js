@@ -18,7 +18,7 @@ const p = {
   Tie: 'Tie',
 };
 
-const TicTacToe = ({ gameMode, difficultyMode }) => {
+const TicTacToe = ({ gameMode, difficultyMode, handleComputerDifficultyChange }) => {
   const [gameStart, setGameStart] = React.useState(false);
   const [turn, setTurn] = React.useState('player1');
   const [tilesVal, setTilesVal] = React.useState(board);
@@ -70,6 +70,10 @@ const TicTacToe = ({ gameMode, difficultyMode }) => {
     setTilesVal(board);
     setGamePaused(false);
   }, [gameMode, difficultyMode]);
+
+  React.useEffect(() => {
+    handleComputerDifficultyChange('hard'); //set difficulty to easy when game mode resets
+  }, [gameMode]);
 
   React.useEffect(() => {
     if (gameMode === 'onePlayerMode' && turn === 'player2' && difficultyMode === 'easy' && !gamePaused) {

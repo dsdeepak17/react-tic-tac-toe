@@ -17,7 +17,7 @@ export default function App() {
   const [mode, setMode] = React.useState('twoPlayerMode');
   const [computerDifficulty, setComputerDifficulty] = React.useState('easy'); // easy, hard
 
-  const handleModeChange = () => {
+  const handleModeChange = (mode) => {
     setMode(gameMode[mode]);
   };
 
@@ -29,7 +29,7 @@ export default function App() {
     }
   }
 
-  const handleComputerDifficultyChange = () => {
+  const handleComputerDifficultyChange = (computerDifficulty) => {
     setComputerDifficulty(difficultyMode[computerDifficulty]);
   }
 
@@ -41,15 +41,15 @@ export default function App() {
   return (
     <div className="App">
       <h3 className="heading">Tic Tac Toe</h3>
-      <TicTacToe gameMode={mode} difficultyMode={computerDifficulty} />
+      <TicTacToe gameMode={mode} difficultyMode={computerDifficulty} handleComputerDifficultyChange={handleComputerDifficultyChange} />
       <div className="mode-switch switch">
-        <Switch defaultChecked onChange={handleModeChange} />
+        <Switch defaultChecked onChange={() => handleModeChange(mode)} />
         <span>{showModeMessage()}</span>
       </div>
       {
         mode === 'onePlayerMode' && (
           <div className="difficulty-switch switch">
-            <Switch defaultChecked onChange={handleComputerDifficultyChange} />
+            <Switch defaultChecked onChange={() => handleComputerDifficultyChange(computerDifficulty)} />
             <span>{showDifficultyMessage()}</span>
           </div>
         )
