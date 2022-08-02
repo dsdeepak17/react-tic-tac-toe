@@ -1,6 +1,6 @@
 import React from 'react';
 import Tile from './Tile';
-import { isGameOver, capitalize, newBoardAfterEasyMove, newBoardAfterDifficultMove } from './utils';
+import { isGameOver, capitalize, newBoardAfterEasyMove, newBoardAfterDifficultMove, debounce } from './utils';
 import Leaderboard from './Leaderboard';
 
 const board = [0, 1, 2, 3, 4, 5, 6, 7, 8];
@@ -18,8 +18,6 @@ const p = {
   Tie: 'Tie',
 };
 
-const timers = [];
-
 const TicTacToe = ({ gameMode, difficultyMode }) => {
   const [gameStart, setGameStart] = React.useState(false);
   const [turn, setTurn] = React.useState('player1');
@@ -34,15 +32,6 @@ const TicTacToe = ({ gameMode, difficultyMode }) => {
   const [gamePaused, setGamePaused] = React.useState(false);
 
   // console.log('state: ', { turn, tilesVal, winner, winPos, players, leaderboard, gamePaused });
-
-  React.useEffect(() => {
-
-    return () => {
-      timers.forEach((timer) => {
-        clearInterval(timer);
-      });
-    }
-  }, []);
 
   React.useEffect(() => {
     const tilesEmpty = tilesVal.filter((val) => typeof val === 'number').length === 9;
@@ -147,8 +136,7 @@ const TicTacToe = ({ gameMode, difficultyMode }) => {
 
   const handleReset = () => {
     setTilesVal(board);
-    const timer = setTimeout(() => { setGamePaused(false) }, 0);
-    timers.push(timer);
+    debounce(setGamePaused(false), 0);
   }
 
   return (
