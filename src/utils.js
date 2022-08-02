@@ -144,7 +144,7 @@ const minimax = (newBoard, player) => {
       }
     }
   }
-
+  if (moves.length === 9) bestMove = Math.floor(Math.random() * 9); // if no winner, random move
   return moves[bestMove];
 }
 

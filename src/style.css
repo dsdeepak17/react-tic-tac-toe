@@ -5,8 +5,9 @@
 	--tile-gap: 5px;
 	--font-size: 40px;
 	--border-size: 10px;
-	--primary-color: #f1f1c0;
+	--primary-color: #f1f1c0ee;
 	--game-over-color: #ff0099;
+  --grey-color: #444;
 }
 
 * {
@@ -22,7 +23,7 @@
 	align-items: center;
 	/* justify-content: center; */
 	padding: 10px;
-	background: #444;
+	background: var(--grey-color);
 	height: 110vh;
 }
 
@@ -71,7 +72,7 @@
 .tile-btn {
 	font-size: var(--font-size);
 	font-weight: 700;
-	background: #f1f1c0;
+	background: var(--primary-color);
 	color: purple;
 	height: var(--tile-size);
 	width: var(--tile-size);
@@ -124,6 +125,8 @@
 	border: solid 0.3px #111;
 	max-width: calc(100vw - 60px);
 }
+
+
 .player-name-input.active {
 	box-shadow: 0 0 10px var(--game-over-color);
 }
@@ -141,16 +144,16 @@
 	justify-content: space-between;
 }
 .black-bg:nth-child(2n-1) {
-	background: linear-gradient(to right, #444, #222);
+	background: linear-gradient(to right, var(--grey-color), #222);
 }
 .black-bg:nth-child(2n) {
-	background: linear-gradient(to left, #444, #222);
+	background: linear-gradient(to left, var(--grey-color), #222);
 }
 
 .leaderboard {
 	padding: 5px 8px;
 	margin: 2px 3px;
-	border: solid 3px #444;
+	border: solid 3px var(--grey-color);
 	border-radius: 8px;
 	width: 18rem;
 	display: flex;
