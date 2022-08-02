@@ -128,7 +128,7 @@ const minimax = (newBoard, player) => {
   }
   let bestMove;
   if (player === 'O') {
-    let bestScore = -10000;
+    let bestScore = Number.NEGATIVE_INFINITY;
     for (let i = 0; i < moves.length; i++) {
       if (moves[i].score > bestScore) {
         bestScore = moves[i].score;
@@ -136,7 +136,7 @@ const minimax = (newBoard, player) => {
       }
     }
   } else {
-    let bestScore = 10000;
+    let bestScore = Number.POSITIVE_INFINITY;
     for (let i = 0; i < moves.length; i++) {
       if (moves[i].score < bestScore) {
         bestScore = moves[i].score;
@@ -154,3 +154,22 @@ export const newBoardAfterDifficultMove = (board, val) => {
   newBoard[pos] = val;
   return newBoard;
 };
+
+
+//debounce function
+//explaination: https://medium.com/@dabit3/debounce-and-throttle-in-javascript-b6e0f9f9f8f4
+
+export const debounce = (func, wait, immediate) => {
+  let timeout;
+  return function () {
+    let context = this, args = arguments;
+    let later = function () {
+      timeout = null;
+      if (!immediate) func.apply(context, args);
+    };
+    let callNow = immediate && !timeout;
+    clearTimeout(timeout);
+    timeout = setTimeout(later, wait);
+    if (callNow) func.apply(context, args);
+  }
+}
