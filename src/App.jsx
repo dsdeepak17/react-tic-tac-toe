@@ -1,6 +1,7 @@
 import React from 'react';
 import TicTacToe from './TicTacToe';
 import './style.css';
+import './loader/loader.css';
 import { Switch } from 'antd';
 import { getWordsFromCamelCase } from './utils';
 

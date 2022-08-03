@@ -1,7 +1,7 @@
 import React from 'react';
 import CrossMarkIcon from './assets/cross.svg';
 
-const Tile = ({ val, turn, handleTurn, handleTileVal, index, winPos = [] }) => {
+const Tile = ({ val, turn, handleTurn, gameMode, handleTileVal, index, winPos = [] }) => {
   const handleClick = (e) => {
     e.preventDefault();
     if (isNaN(val)) return;
@@ -16,9 +16,11 @@ const Tile = ({ val, turn, handleTurn, handleTileVal, index, winPos = [] }) => {
     return val;
   };
 
+  const disableTileClick = () => gameMode === 'onePlayerMode' && turn === 'player2';
+
   return (
     <div className="tile">
-      <button className={winPos.includes(index) ? 'tile-btn win-pos' : 'tile-btn'} onClick={handleClick}>
+      <button className={winPos.includes(index) ? 'tile-btn win-pos' : 'tile-btn'} onClick={handleClick} disabled={disableTileClick()}>
         {tileImage()}
       </button>
     </div>

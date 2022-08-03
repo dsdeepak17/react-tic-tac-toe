@@ -1,22 +1,10 @@
 import React from 'react';
 import Tile from './Tile';
-import { isGameOver, capitalize, newBoardAfterEasyMove, newBoardAfterDifficultMove, debounce } from './utils';
+import { isGameOver, capitalize, newBoardAfterEasyMove, newBoardAfterDifficultMove, debounce, LoadingSpinner } from './utils';
 import Leaderboard from './Leaderboard';
+import Loader from './loader';
 
-const board = [0, 1, 2, 3, 4, 5, 6, 7, 8];
-const turnComplement = {
-  player1: 'player2',
-  player2: 'player1',
-};
-const symbol = {
-  player1: 'X',
-  player2: 'O',
-};
-const p = {
-  X: 'player1',
-  O: 'player2',
-  Tie: 'Tie',
-};
+import { board, turnComplement, symbol, p, COMPUTER_WAIT_TIME } from './constants';
 
 const TicTacToe = ({ gameMode, difficultyMode, handleComputerDifficultyChange }) => {
   const [gameStart, setGameStart] = React.useState(false);
@@ -30,8 +18,16 @@ const TicTacToe = ({ gameMode, difficultyMode, handleComputerDifficultyChange })
   });
   const [leaderboard, setLeaderboard] = React.useState([]);
   const [gamePaused, setGamePaused] = React.useState(false);
+  const [machineIsPlaying, setMachineIsPlaying] = React.useState(false);
 
   // console.log('state: ', { turn, tilesVal, winner, winPos, players, leaderboard, gamePaused });
+
+  React.useEffect(() => {
+    if (turn === 'player2' && gameMode === 'computer') {
+      setMachineIsPlaying(true);
+    } else setMachineIsPlaying(false);
+    console.log('machineIsPlaying: ', machineIsPlaying);
+  }, [turn]);
 
   React.useEffect(() => {
     const tilesEmpty = tilesVal.filter((val) => typeof val === 'number').length === 9;
@@ -76,28 +72,36 @@ const TicTacToe = ({ gameMode, difficultyMode, handleComputerDifficultyChange })
   }, [gameMode]);
 
   React.useEffect(() => {
-    if (gameMode === 'onePlayerMode' && turn === 'player2' && difficultyMode === 'easy' && !gamePaused) {
-      //get random number between 1 and 10
-      const randomNumber = Math.floor(Math.random() * 10) + 1;
-      let newBoard = [];
 
-      //run easy algo and hard algo half the time
-      if (randomNumber <= 5) newBoard = newBoardAfterEasyMove(tilesVal, 'O');
-      else newBoard = newBoardAfterDifficultMove(tilesVal, 'O');
+    if (gameMode === 'onePlayerMode' && turn === 'player2') {
+      setTimeout(() => {
+
+        if (difficultyMode === 'easy' && !gamePaused) {
+          //get random number between 1 and 10
+          const randomNumber = Math.floor(Math.random() * 10) + 1;
+          let newBoard = [];
+
+          //run easy algo and hard algo half the time
+          if (randomNumber <= 5) newBoard = newBoardAfterEasyMove(tilesVal, 'O');
+          else newBoard = newBoardAfterDifficultMove(tilesVal, 'O');
 
 
-      if (!isGameOver(tilesVal)) {
-        setTilesVal(newBoard);
-        setTurn('player1');
-      }
-    }
+          if (!isGameOver(tilesVal)) {
+            setTilesVal(newBoard);
+            setTurn('player1');
+          }
+        }
 
-    if (gameMode === 'onePlayerMode' && turn === 'player2' && difficultyMode === 'hard' && !gamePaused) {
-      const newBoard = newBoardAfterDifficultMove(tilesVal, 'O');
-      if (!isGameOver(tilesVal)) {
-        setTilesVal(newBoard);
-        setTurn('player1');
-      }
+        if (difficultyMode === 'hard' && !gamePaused) {
+          const newBoard = newBoardAfterDifficultMove(tilesVal, 'O');
+          if (!isGameOver(tilesVal)) {
+            setTilesVal(newBoard);
+            setTurn('player1');
+          }
+        }
+
+
+      }, tilesVal.filter(tile => typeof tile === 'number').length * COMPUTER_WAIT_TIME[difficultyMode]);
     }
 
     const { winner: gameWinner, winPos: winningPositions } = isGameOver(tilesVal) || { winner: '', winPos: [] };
@@ -182,6 +186,7 @@ const TicTacToe = ({ gameMode, difficultyMode, handleComputerDifficultyChange })
                 index={i}
                 turn={turn}
                 winPos={winPos}
+                gameMode={gameMode}
                 handleTurn={handleTurn}
                 handleTileVal={handleTileVal}
               />
@@ -194,6 +199,15 @@ const TicTacToe = ({ gameMode, difficultyMode, handleComputerDifficultyChange })
           <div className="game-over-message">
             {winner !== 'Tie' && <p>{`Winner: ${winner}`}</p>}
             {winner === 'Tie' && <p>{`The Game is Tied!`}</p>}
+          </div>
+        )
+      }
+      {
+        !gamePaused && gameMode === 'onePlayerMode' && turn === 'player2' && (
+          <div className="spinner-container">
+            <span className="spinner-text">Calculating Move...</span>
+            {/* <LoadingSpinner /> */}
+            <Loader />
           </div>
         )
       }

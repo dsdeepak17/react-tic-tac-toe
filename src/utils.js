@@ -173,3 +173,5 @@ export const debounce = (func, wait, immediate) => {
     if (callNow) func.apply(context, args);
   }
 }
+
+export const LoadingSpinner = () => <div className="loading-spinner" />;
