@@ -26,7 +26,6 @@ const TicTacToe = ({ gameMode, difficultyMode, handleComputerDifficultyChange })
     if (turn === 'player2' && gameMode === 'computer') {
       setMachineIsPlaying(true);
     } else setMachineIsPlaying(false);
-    console.log('machineIsPlaying: ', machineIsPlaying);
   }, [turn]);
 
   React.useEffect(() => {
