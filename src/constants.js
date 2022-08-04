@@ -5,8 +5,8 @@
 //Tictactoe constants
 
 export const COMPUTER_WAIT_TIME = {
-  easy: 350,
-  hard: 600,
+  easy: 220,
+  hard: 500,
 };
 
 export const board = [0, 1, 2, 3, 4, 5, 6, 7, 8];
