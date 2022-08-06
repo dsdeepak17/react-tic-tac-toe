@@ -3,16 +3,9 @@ import TicTacToe from './TicTacToe';
 import './style.css';
 import './loader/loader.css';
 import { Switch } from 'antd';
-import { getWordsFromCamelCase } from './utils';
 
-const gameMode = {
-  onePlayerMode: 'twoPlayerMode',
-  twoPlayerMode: 'onePlayerMode',
-};
-const difficultyMode = {
-  easy: 'hard',
-  hard: 'easy',
-};
+
+import { gameMode, difficultyMode } from './constants';
 
 export default function App() {
   const [mode, setMode] = React.useState('twoPlayerMode');

@@ -5,8 +5,8 @@
 //Tictactoe constants
 
 export const COMPUTER_WAIT_TIME = {
-  easy: 220,
-  hard: 500,
+  easy: 170,
+  hard: 380,
 };
 
 export const board = [0, 1, 2, 3, 4, 5, 6, 7, 8];
@@ -22,4 +22,15 @@ export const p = {
   X: 'player1',
   O: 'player2',
   Tie: 'Tie',
+};
+
+//App Constants
+
+export const gameMode = {
+  onePlayerMode: 'twoPlayerMode',
+  twoPlayerMode: 'onePlayerMode',
+};
+export const difficultyMode = {
+  easy: 'hard',
+  hard: 'easy',
 };
