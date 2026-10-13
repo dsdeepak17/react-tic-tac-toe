@@ -1,12 +1,14 @@
 import 'dotenv/config';
 
 import { randomUUID } from 'node:crypto';
+import path from 'node:path';
 
 import { createClient } from '@libsql/client';
 import express from 'express';
 
 const { TURSO_DATABASE_URL, TURSO_AUTH_TOKEN } = process.env;
 const port = Number(process.env.PORT) || 5000;
+const buildDirectory = path.resolve('build');
 
 if (!TURSO_DATABASE_URL || !TURSO_AUTH_TOKEN) {
   throw new Error('TURSO_DATABASE_URL and TURSO_AUTH_TOKEN must be configured.');
@@ -33,6 +35,10 @@ await database.execute(`
 `);
 
 app.use(express.json({ limit: '10kb' }));
+
+app.get('/healthz', (_request, response) => {
+  response.status(200).json({ status: 'ok' });
+});
 
 app.get('/api/stat-archives', async (_request, response) => {
   try {
@@ -129,6 +135,23 @@ app.post('/api/stat-archives', async (request, response) => {
   }
 });
 
+app.use(express.static(buildDirectory));
+
+app.use('/api', (_request, response) => {
+  response.status(404).json({ error: 'API endpoint not found.' });
+});
+
+app.get('*', (_request, response) => {
+  response.sendFile(path.join(buildDirectory, 'index.html'), (error) => {
+    if (error) {
+      console.error('Failed to serve the React app:', error);
+      if (!response.headersSent) {
+        response.status(500).send('The app has not been built.');
+      }
+    }
+  });
+});
+
 app.listen(port, () => {
-  console.log(`Stats API listening on http://localhost:${port}`);
+  console.log(`Tic Tac Toe app and API listening on port ${port}`);
 });

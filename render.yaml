@@ -1,0 +1,15 @@
+services:
+  - type: web
+    name: react-tic-tac-toe
+    runtime: node
+    plan: free
+    buildCommand: npm ci --include=dev && npm run build
+    startCommand: npm run start:api
+    healthCheckPath: /healthz
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: TURSO_DATABASE_URL
+        sync: false
+      - key: TURSO_AUTH_TOKEN
+        sync: false
