@@ -3,12 +3,16 @@
   "version": "0.0.0",
   "private": true,
   "dependencies": {
+    "@libsql/client": "^0.18.0",
     "antd": "^4.22.2",
+    "dotenv": "^18.0.7",
+    "express": "^4.18.1",
     "react": "^18.1.0",
     "react-dom": "^18.1.0"
   },
   "scripts": {
     "start": "react-scripts start",
+    "start:api": "node server/server.mjs",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
@@ -16,6 +20,7 @@
   "devDependencies": {
     "react-scripts": "latest"
   },
+  "proxy": "http://localhost:5000",
   "browserslist": {
     "production": [
       ">0.2%",
