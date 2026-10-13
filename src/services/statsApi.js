@@ -1,5 +1,6 @@
 const request = async (url, options) => {
-  const apiBaseUrl = process.env.API_BASE_URL || '';
+  const apiBaseUrl = process.env.REACT_APP_API_BASE_URL || '';
+  console.log(`deepak: API_BASE_URL: ${apiBaseUrl}`);
   const response = await fetch(`${apiBaseUrl}${url}`, options);
   const result = await response.json();
 
