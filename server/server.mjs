@@ -40,6 +40,17 @@ app.get('/healthz', (_request, response) => {
   response.status(200).json({ status: 'ok' });
 });
 
+app.get('/keep-alive', (_request, response) => {
+  response.status(200).send('pong');
+});
+
+// Self-ping every x minutes where x ranges from 8 to 13 minutes to keep the app alive on Render.com free plan.
+const randomInterval = () => Math.floor(Math.random() * (13 - 8 + 1) + 8) * 60 * 1000;
+setInterval(() => {
+  const port = Number(process.env.PORT) || 5000;
+  fetch(`http://localhost:${port}/keep-alive`).catch(() => {});
+}, randomInterval());
+
 app.get('/api/stat-archives', async (_request, response) => {
   try {
     const result = await database.execute(
